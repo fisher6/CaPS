@@ -1,0 +1,71 @@
+{% extends "caps/Base.html" %}
+
+{% block title %} CaPS - Edit Student Profile {% endblock title %}
+
+{% block content %}
+    {% load static %}
+    {% load custom_tags %}
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <div class="card">
+                <div class="card-title grey lighten-2 center-align">Edit Profile</div>
+                <!-- Update Profile form -->
+                <p style="color:red">
+                {% for error in form.non_field_errors %}
+				    	    {{ error }}
+				        {% endfor %}
+                </p>
+                <div class="padded">
+                {% if user.is_authenticated %}
+                    <form action="{% url 'updateprofile' %}" method="post" enctype="multipart/form-data">
+                    {% for field in user_form.visible_fields %}
+                        <div class="input-field">
+                        {{ field.label_tag }} {{ field }}<br>
+                        </div>
+                        {% if field.errors %}
+                            <p style="color:red">
+                            {{field.errors}}
+                            </p>
+                        {% endif %}
+                        {% if field.non_field_errors %}
+                            <p style="color:red">
+                            {{field.non_field_errors}}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                    {% for field in student_form.visible_fields %}
+                        {{ field.label_tag }} {{ field }}
+                        {% if field.errors %}
+                            <p style="color:red">
+                            {{field.errors}}
+                            </p>
+                        {% endif %}
+                        {% if field.non_field_errors %}
+                            <p style="color:red">
+                            {{field.non_field_errors}}
+                            </p>
+                        {% endif %}
+                    {% endfor %}<br><br>
+
+                    {% csrf_token %}
+                    <div class="center-align">
+                        <button class="waves-effect waves-light btn grey lighten-2" type="submit" value="Edit">Edit</button>
+                    </div>
+                    <input type="hidden" name="next" value="{{next}}">
+                    </form>
+                    </div>
+                {% else %}
+                    You're not logged in!<br>
+                    Would you like to
+                    <a href="{% url 'login' %}">login</a> or <a href="{% url 'register' %}">
+                    register
+                    </a>?
+                {% endif %}
+                <!-- For a future iteration
+                <br><a href="#">Reset Password</a>
+                -->
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

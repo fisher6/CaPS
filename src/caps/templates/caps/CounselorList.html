@@ -1,0 +1,48 @@
+{% extends "caps/Base.html" %}
+
+{% block title %} CaPS - Counselor List {% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+<h4 class="header grey-text text-lighten-1">View All Counselors</h4>
+
+<div class="lite-padded">
+{% if not counselor_users %}
+There are no viewable counselors at this time.
+{% else %}
+    <table class="bordered highlight responsive-table">
+        <thead>
+            <tr class="grey lighten-2">
+                <th data-field="name">Username</th>
+                <th data-field="status">First Name</th>
+                <th data-field="status">Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for counselor in counselor_users %}
+                <tr>
+                    <td>
+                        <a href="{% url 'counselorprofile' counselor.username %}">
+                        <div class="table-link">{{ counselor.username }}</div>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'counselorprofile' counselor.username %}">
+                        <div class="table-link">{{ counselor.first_name }}</div>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'counselorprofile' counselor.username %}">
+                        <div class="table-link">{{ counselor.last_name }}</div>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+</div>
+
+{% endblock content %}

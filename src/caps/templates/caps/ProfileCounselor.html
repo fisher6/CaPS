@@ -1,0 +1,112 @@
+{% extends "caps/Base.html" %}
+
+{% block title %} CaPS - Counselor Profile {% endblock title %}
+
+{% block content %}
+    {% load static %}
+<div class="section">
+<h4 class="grey-text text-lighten-1">Counselor Profile</h4>
+</div>
+<div class="row">
+<div class="col s10 offset-s1">
+<div class="section">
+    <div class="card horizontal grey lighten-2">
+      <div class="card-image">
+          <!-- Shows counselor profile picture if he has one set -->
+          {% if user.counselor.picture %}
+          <img src="{{ user.counselor.picture.url }}"
+          {% else %}
+          <img src="{% static "caps/images/defaultIcon.png" %}"
+          {% endif %}
+          alt="{{ user.first_name }} {{ user.last_name }}">
+        </div>
+        <div class="card-stacked">
+            <div class="card-content">
+                <h5>{{ user.first_name|default:"UnspecifiedFirst" }}
+                    {{ user.last_name|default:"UnspecifiedLast" }}
+                </h5>
+                {{ user.counselor.age|default:"UnspecifiedAge" }} years old/
+                {{ user.counselor.gender|default:"UnspecifiedGender" }}<br>
+                {{ user.counselor.degree|default:"UnspecifiedDegree" }} from
+                {{ user.counselor.school|default:"UnspecifiedSchool" }}<br>
+                {{ user.counselor.position_title|default:"UnspecifiedPositionTitle" }} with
+                {{ user.counselor.seniority|default:"UnspecifiedSeniority" }} years experience<br>
+                {% if request.user == user %}
+				Next Appointment: {{ next_meeting|default:"No appointment scheduled." }}<br>
+				{% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="section">
+    <h4 class="grey-text text-lighten-1">Bio</h4>
+    {% if user.counselor.bio %}
+    {{ user.counselor.bio }}
+	{% else %}
+	{% if request.user == user %}
+	<p style="color:red">
+	Please edit your profile to tell us a little bit more about yourself.
+	</p>
+	{% else %}
+	{{ user.first_name }} hasn't added a bio yet.
+	{% endif %}
+	{% endif %}
+    </div>
+    <div class="divider"></div>
+
+    <div class="section">
+	{% if request.user == user %}
+    <h4 class="header grey-text text-lighten-1">Advising Students</h4>
+    {% if user.counselor.students_advising.count == 0 %}
+    You aren't advising any students currently.
+    {% else %}
+     <table class="bordered highlight responsive-table">
+        <thead>
+            <tr class="grey lighten-2">
+                <th data-field="name">Student Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in user.counselor.students_advising.all %}
+            {% if not student.tasks %}
+            <tr>
+                <td>
+                    <a href="{% url 'student_profile_for_counselor' student.user.username %}">
+                    <div class="table-link">{{ student.user.first_name }} {{ student.user.last_name }}</div>
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            {% for task in student.tasks %}
+            <tr>
+                {% if forloop.counter0 == 0 %}
+                <td>
+                    <a href="{% url 'student_profile_for_counselor' student.user.username %}">
+                    <div class="table-link">{{ student.user.first_name }} {{ student.user.last_name }}</div>
+                    </a>
+                </td>
+                <td>{{ task.name }}</td>
+                <td>{{ tast.status }}</td>
+                {% else %}
+                <td> </td>
+                <td>{{ task.name }}</td>
+                <td>{{ tast.status }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+	{% endif %}
+      <!-- for a future iteration
+      <h4 class="header grey-text text-lighten-1">Schedule</h4>
+      -->
+    </div>
+</div>
+</div>
+</div>
+{% endblock content %}

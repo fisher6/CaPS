@@ -1,0 +1,62 @@
+{% extends "caps/Base.html" %}
+
+{% block title %} CaPS - Register {% endblock title %}
+
+{% block content %}
+    {% load static %}
+
+<div class="section">
+    <h4 class="grey-text text-lighten-1">You're on your way</h4>
+    <p>Everything will be kept confidential until you are matched with a therapist.<br>
+    Once you are matched, only your counselor will have access to your information.<br>
+    </p>
+</div>
+    <div class="row">
+        <div class="col s4 offset-s4">
+            <div class="card">
+                <div class="card-title grey lighten-2 center-align">Register</div>
+                <!-- Registeration form -->
+                {% if user.is_authenticated %}
+                    You're already registered!<br>
+                    Would you like to <a href="{% url 'logout' %}">logout</a>?
+                {% else %}
+                <p style="color:red">
+                {% for error in form.non_field_errors %}
+				    	    {{ error }}
+				        {% endfor %}
+                </p>
+                <div class="padded">
+                    <form action="{% url 'register' %}" method="post">
+                    {% for field in form.visible_fields %}
+                        <div class="input-field">
+                        {{ field.label_tag }} {{ field }}<br>
+                        </div>
+                        {% if field.errors %}
+                            <p style="color:red">
+                            {{field.errors}}
+                            </p>
+                        {% endif %}
+                        {% if field.non_field_errors %}
+                            <p style="color:red">
+                            {{field.non_field_errors}}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                    {% csrf_token %}
+                    <div class="center-align">
+                        <button class="waves-effect waves-light btn grey lighten-2" type="submit" value="Register">Register</button>
+                    </div>
+                    <input type="hidden" name="next" value="{{next}}">
+                    </form>
+                    </div>
+                </div>
+                <div class="center-align">
+                    Already have an account?<br>
+                    Click <a href="{% url 'login' %}">here</a> to login.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+href="{% url 'register' %}"

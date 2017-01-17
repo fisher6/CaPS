@@ -1,0 +1,71 @@
+{% extends "caps/BaseHome.html" %}
+
+{% block title %} CaPS - Contact {% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="section">
+<h4 class="grey-text text-lighten-1">Phone Number</h4>
+<div class="right health-tips">
+    <div class="card white" height="1000">
+        <div class="card-content">
+            <span class="card-title">Office Hours</span>
+            <p>
+            Monday through Friday<br>
+            8:30 a.m. -  5 p.m.<br>
+            (Evening and Saturday hours available by appointment only.)
+            </p>
+        </div>
+        <div class="card-content">
+            <span class="card-title">Mailing Address & Fax</span>
+            <p>
+            Counseling and Psychological Services<br>
+            Carnegie Mellon University<br>
+            1060 Morewood Avenue<br>
+            Pittsburgh, PA 15213<br>
+            Fax: 412-268-4084
+            </p>
+        </div>
+    </div>
+</div>
+
+<p>
+For an appointment during regular office hours, you can call this number:<br>
+<div class="left">
+    <div class="card indigo darken-4">
+        <div class="card-content white-text">
+            412-268-2922
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+or use the "Schedule an Appointment" chat button on the <a href="{% url 'home' %}">homepage</a>.<br>
+For support or if you are feeling distressed after hours, call or chat below to speak with a counselor.
+</p>
+</div>
+<div class="divider"></div>
+
+<div class="section">
+<h4 class="grey-text text-lighten-1">Office Location</h4>
+<div class="row">
+    <div class="col s6">
+        <img src="{% static "caps/images/caps-map-700x450.png" %}" width="100%"><br>
+        CaPS is located on the 2nd floor of Morewood Gardens, E-Tower.
+    </div>
+</div>
+<div class="row">
+    <div class="col s6">
+        <img src="{% static "caps/images/CAPS-entrance-700x450.jpg" %}" width="100%"><br>
+        Enter through the red entranceway at the back of E-Tower. Take the elevator to the 2nd floor.
+    </div>
+    <div class="col s6">
+        <img src="{% static "caps/images/CAPS-entrance-rear-700x450.jpg" %}" width="100%"><br>
+        You can also enter through the parking lot-facing walkway, on the backside of Morewood Gardens.
+    </div>
+</div>
+</div>
+
+{% endblock content %}

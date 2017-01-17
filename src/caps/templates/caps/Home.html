@@ -1,0 +1,119 @@
+{% extends "caps/BaseHome.html" %}
+
+{% block title %} CaPS - Home Page {% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+{% for error in errors %}
+<p class="error">
+{{error}}
+</p>
+{% endfor %}
+
+<div class="section">
+<h4 class="grey-text text-lighten-1">We're here to help</h4>
+<p>CaPS provides a safe, confidential environment for students to talk about personal and academic concerns.
+We also provide consultation services for faculty, staff, and family members.</p>
+<p><a href="{% url 'contact' %}">Call, stop by,</a> or chat with a scheduler below to schedule a consultation.</p>
+</div>
+<div class="divider"></div>
+
+<div class="section">
+<div class="right health-tips">
+    <div class="card red darken-4">
+        <div class="card-content white-text">
+            <span class="card-title">Health Tips</span>
+            <p>Don't forget; a healthy body helps create a healthy mind!</p>
+            Take care of your body by:
+            <ul>
+                <li><i class="material-icons">done</i>Exercising daily</li>
+                <li><i class="material-icons">done</i>Sleeping 7-8 hours per night</li>
+                <li><i class="material-icons">done</i>Eating fresh fruits and veggies</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<h4 class="grey-text text-lighten-1">5 Things You Should Know About CaPS</h4>
+<p>
+1. All students currently enrolled at the Pittsburgh campus are eligible for services at CaPS at no additional cost to
+    them.<br>
+2. All services are confidential.<br>
+3. CaPS is one of many support resources on campus available to help CMU students with a range of struggles.
+    We can help you identify what resources are the best fit for your needs.<br>
+4. You are not alone! CaPS sees about 11% of the student population each year. These are undergraduate and graduate
+    students who at some point throughout the year decided to seek help with their struggles.<br>
+5. Asking for help is a sign of psychological strength, not weakness. At some point in life, most of us will experience
+    some psychological hardship that could benefit from professional support. Asking for help when needed can result
+    in a faster and more long-lasting recovery.<br>
+</p>
+</div>
+{% endblock content %}
+
+{% block footer %}
+<footer class="page-footer grey lighten-2 z-pos-above-3">
+    <div class="row">
+        {% if user.is_authenticated %}
+        {% if user.student %}
+        {% if meeting_counselor %}
+        <div class="col s4">
+            <div class="center-align">
+                <a id="{{meeting_counselor.user.username|default:"Counselor"}}-button"
+                   class="waves-effect waves-light btn grey lighten-2"
+                   href="javascript:register_popup('{{meeting_counselor.user.username|default:"Counselor"}}',
+                   'Counselor: {{meeting_counselor.user.first_name|default:"Counselor"}}',
+                    '{{user.username}}');">
+                    Chat with your counselor
+                </a>
+            </div>
+        </div>
+        {% else %}
+            <div class="col s4"></div>
+        {% endif %}
+        <div class="col s4">
+            <div class="center-align">
+                <a id="receptionist-button" class="waves-effect waves-light btn grey lighten-2"
+                   href="javascript:register_popup('receptionist', 'Receptionist', '{{user.username}}');">Schedule an Appointment
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% if not user.is_authenticated %}
+        <div class="col s4 offset-s8">
+        {% elif not user.student %}
+        <div class="col s4 offset-s8">
+        {% else %}
+        <div class="col s4">
+        {% endif %}
+            <div class="center-align">
+                    {% if user.emergency %}
+                    <a id="emergencyresponder-button" class="waves-effect waves-light btn grey lighten-2"
+                   href="javascript:register_popup('emergencyresponder', 'Emergency Student', '{{user.username}}');">
+                    Emergency Response
+                    {% elif user.counselor %}
+                        {% if meeting_student %}
+                    <a id="chat-button" class="waves-effect waves-light btn grey lighten-2"
+                   href="javascript:register_popup('chat', 'Student', '{{user.username}}');">
+                    Chat with Student
+                        {% endif %}
+                    {% elif user.receptionist %}
+                    <a id="schedule-button" class="waves-effect waves-light btn grey lighten-2"
+                   href="javascript:register_popup('schedule', 'Student', '{{user.username}}');">
+                    Schedule with Student
+                    {% elif user.student %}
+                    <a id="emergency-button" class="waves-effect waves-light btn grey lighten-2"
+                   href="javascript:register_popup('emergency', 'Emergency Responder', '{{user.username}}');">
+                    Get Emergency Help
+                    {% elif not user.is_authenticated %}
+                    <a id="emergency-button" class="waves-effect waves-light btn grey lighten-2"
+                   href="javascript:register_popup('emergency', 'Emergency Responder', '{{user.username}}');">
+                    Get Emergency Help
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock footer %}

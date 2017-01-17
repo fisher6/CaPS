@@ -1,0 +1,195 @@
+@font-face {
+      font-family: "OpenSans";
+      src: local(OpenSans Regular), url("../fonts/OpenSans/OpenSans-Regular.ttf");
+      src: url("../fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+      font-family: "OpenSansBold";
+      src: local(OpenSans Bold), url("../fonts/OpenSans/OpenSans-Bold.ttf");
+      src: url("../fonts/OpenSans/OpenSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "OpenSansItalic";
+    src: local(OpenSans Italic), url("../fonts/OpenSans/OpenSans-Italic.ttf");
+    src: url("../fonts/OpenSans/OpenSans-Italic.ttf") format("truetype");
+}
+
+@font-face {
+      font-family: "BauerBodoniBold";
+      src: url("../fonts/BauerBodoniBold/BauerBodoniBoldBT.ttf") format("truetype");
+}
+
+.table-link {
+    height:100%;
+    width:100%
+}
+
+.padded {
+    padding: 25px;
+}
+
+.lite-padded {
+    padding: 5px;
+}
+
+html {
+    font-family: "OpenSans";
+}
+
+a:link {
+    color: #5e0202;
+}
+
+a:visited {
+    color: #5e0202;
+}
+
+a:hover {
+    color: #5e0202;
+}
+
+a:active {
+    color: #5e0202;
+}
+
+.cmu-logo {
+    font-family: "BauerBodoniBold";
+}
+
+/* Fixed Navbar pieces */
+.navbar-piece1-fixed {
+    position: fixed;
+    top: 64px;
+    height: 64px;
+    width: 100%;
+    z-index: 1;
+}
+
+.navbar-piece2-fixed {
+    position: fixed;
+    top: 128px;
+    width: 100%;
+    z-index: 1;
+}
+
+/* For positioning of elements depth-wise */
+
+.z-pos-above-1 {
+    z-index: 999;
+}
+
+.z-pos-above-2 {
+    z-index: 998;
+}
+
+.z-pos-above-3 {
+    z-index: 997;
+}
+
+.health-tips {
+    width: 33%;
+    margin: 5px;
+}
+
+/* Fixed footer */
+
+body {
+   min-height: 400px;
+   margin-bottom: 100px;
+   clear: both;
+}
+
+footer {
+    position: fixed;
+    bottom: 0px;
+    height: 75px;
+    width: 100%;
+}
+
+
+/* Chat box CSS */
+
+
+@media only screen and (max-width : 540px)
+{
+    .chat-popup
+    {
+        display: none !important;
+    }
+}
+
+.popup-box
+{
+    display: none;
+    position: fixed;
+    bottom: 75px;
+    right: 200px;
+    height: 285px;
+    background-color: #ffffff;
+    width: 300px;
+    border: 1px solid #e0e0e0;
+}
+
+.popup-box .popup-head
+{
+    background-color: #e0e0e0;
+    padding: 5px;
+    color: #5e0202;
+    font-weight: bold;
+    font-size: 14px;
+    clear: both;
+}
+
+.popup-box .popup-head .popup-head-left
+{
+    float: left;
+}
+
+.popup-box .popup-head .popup-head-right
+{
+    float: right;
+    opacity: 0.5;
+}
+
+.popup-box .popup-head .popup-head-right a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+.popup-box .popup-messages
+{
+    height: 209px;
+    overflow-y: scroll;
+}
+
+.popup-input {
+    position: absolute;
+    bottom: 0px;
+    padding: 3px;
+    width: 250px;
+}
+
+.popup-input-button {
+    position: absolute;
+    bottom: 0px;
+    width: 48px;
+    left: 250px;
+    height: 43px;
+}
+
+.chat-username {
+    font-weight: bold;
+    color: #5e0202;
+}
+
+.error { /* for printing errors in home screen if any occur */
+	color: red;
+	font-size: 20px;
+}
+
+.text-dark-red {
+    color: #5e0202;
+}

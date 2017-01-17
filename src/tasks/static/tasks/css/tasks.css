@@ -1,0 +1,15 @@
+.canvas-container {
+    width:550px;
+    margin: 0 auto;
+    margin-top:100px;
+}
+
+.canvas-size {
+    width:550px;
+    height:400px;
+}
+
+canvas {
+    background: #ffffff;
+    border:1px solid #e0e0e0;
+}

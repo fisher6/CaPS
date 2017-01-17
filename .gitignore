@@ -1,0 +1,48 @@
+# Class-specific section #
+
+
+# Java section #
+*.class
+
+# Django section #
+*.log
+*.pot
+*.pyc
+local_settings.py
+*.py[cod]
+migrations
+
+# C extensions
+*.so
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+htmlcov
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Mac OS files
+.DS_Store
+
+# Pycharm project setups
+.idea
+
+# sqlite
+db.sqlite3
+
+# Windows .bat files
+.bat
+
+# Linux/Mac .sh files
+.sh

@@ -1,0 +1,41 @@
+{% extends "caps/Base.html" %}
+
+{% block title %} CaPS - Home Page {% endblock title %}
+
+{% load static %}
+
+{% block navigation %}
+{{ block.super }}
+        <div id="homeNav" class="navbar-fixed z-pos-above-3">
+            <nav class="grey lighten-2" role="navigation">
+                <div class="nav-piece2-fixed">
+                    <div class="row">
+                        <div class="col s3 center-align">
+                            <a href="{% url 'registerdesc' %}" class="waves-effect waves-gray btn-flat grey lighten-2">
+                                Get Support
+                            </a>
+                        </div>
+                        <div class="col s3 center-align">
+                            <a href="{% url 'services' %}" class="waves-effect waves-gray btn-flat grey lighten-2">
+                                Services
+                            </a>
+                        </div>
+                        <div class="col s3 center-align">
+                            <a href="{% url 'resources' %}" class="waves-effect waves-gray btn-flat grey lighten-2">
+                                Resources
+                            </a>
+                        </div>
+                        <div class="col s3 center-align">
+                            <a href="{% url 'contact' %}" class="waves-effect waves-gray btn-flat grey lighten-2">
+                                Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+{% endblock navigation %}
+
+{% block content %}
+
+{% endblock content %}

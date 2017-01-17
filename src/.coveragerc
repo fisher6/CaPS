@@ -1,0 +1,17 @@
+[run]
+include = 
+    caps/*
+    tasks/*
+ 
+[report]
+omit =
+    caps/migrations/*
+    caps/templatetags/*
+    caps/models.py
+    caps/admin.py
+    caps/apps.py
+    tasks/migrations/*
+    tasks/models.py
+    tasks/admin.py
+ 
+show_missing = True

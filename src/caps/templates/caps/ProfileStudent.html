@@ -1,0 +1,207 @@
+{% extends "caps/Base.html" %}
+
+{% block title %} CaPS - Student Profile {% endblock title %}
+
+{% block content %}
+    {% load static %}
+
+<!-- Modal Structure -->
+<div id="completedmodal" class="modal">
+    <div class="modal-content">
+        <h4>Exercise Complete</h4>
+        <p>You've already completed this exercise.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">Okay</a>
+    </div>
+</div>
+<div id="missedmodal" class="modal">
+    <div class="modal-content">
+        <h4>Exercise Missed</h4>
+        <p>You've missed this exercise.  Talk to your counselor about re-assigning it.</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">Okay</a>
+    </div>
+</div>
+
+<div class="section">
+<h4 class="grey-text text-lighten-1">Student Profile</h4>
+</div>
+<div class="row">
+<div class="col s10 offset-s1">
+<div class="section">
+    <div class="card horizontal grey lighten-2">
+        <div class="card-image">
+            <img src="{{ user.student.picture.url }}" alt="{{ user.first_name }} {{ user.last_name }}">
+        </div>
+        <div class="card-stacked">
+            <div class="card-content">
+                <h5>{{ user.first_name|default:"UnspecifiedFirst" }}
+                    {% if user.student.preferred_name %}
+                    ({{ user.student.preferred_name }})
+                    {% endif %}
+                    {{ user.last_name|default:"UnspecifiedLast" }}
+                </h5>
+                <br>
+                {% if user.student.class_year %}
+                {{ user.student.class_year }}<br>
+                {% else %}
+				{% if request.user == user %}
+                <p style="color:red">
+                Please edit your profile to add your class year.
+                </p>
+                {% endif %}
+				{% endif %}
+                {% if user.student.major %}
+                Majoring in: {{ user.student.major }}<br>
+                {% else %}
+				{% if request.user == user %}
+                <p style="color:red">
+                Please edit your profile to add your major.
+                </p>
+				{% endif %}
+                {% endif %}
+                <!-- {{ user.student.class_year|default:"" }} -->
+                {% if user.student.age %}
+                {{ user.student.age }} years old
+                {% if user.student.gender %}
+                / {{ user.student.gender }}
+                {% else %}
+                {% if request.user == user %}
+                <p style="color:red">
+				Please edit your profile to set your gender.
+				{% endif %}
+                </p>
+                {% endif %}
+                {% else %}
+                {% if user.student.gender %}
+                {% if request.user == user %}
+				<p style="color:red">
+                  Please edit your profile to set your age.
+                </p>
+				{% endif %}
+                Gender: {{ user.student.gender }}
+                {% else %}
+                <p style="color:red">
+                Please edit your profile to set your age and gender.
+                </p>
+                {% endif %}
+                {% endif %}
+                <br>
+                {% if user.student.counselor %}
+                Counselor: <a href="{% url 'counselorprofile' user.student.counselor.user.username %}">{{ user.student.counselor.user.first_name }} {{ user.student.counselor.user.last_name }}</a><br>
+                Next Appointment: {{ next_meeting|default:"No appointment scheduled." }}<br>
+                {% else %}
+                You haven't been assigned a counselor yet.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="section">
+    <h4 class="grey-text text-lighten-1">Bio</h4>
+    {% if user.student.bio %}
+    {{ user.student.bio }}
+	{% else %}
+	{% if request.user == user %}
+	<p style="color:red">
+	Please edit your profile to tell us a little bit more about yourself.
+	</p>
+	{% else %}
+	{{ user.first_name }} hasn't added a bio yet.
+	{% endif %}
+	{% endif %}
+    </div>
+    <div class="divider"></div>
+
+    <div class="section">
+    <h4 class="grey-text text-lighten-1">Reasons for seeking help</h4>
+    {% if user.student.seeking_help_reasons.all %}
+    <ul>
+	{% for seeking_help_reason in user.student.seeking_help_reasons.all %}
+	<li> {{ seeking_help_reason }} </li>
+	{% endfor %}
+	</ul>
+	{% else %}
+	{% if request.user == user %}
+	<p style="color:red">
+	Please specify the reason(s) you seek CaPS help, so we can help you better.
+	</p>
+	{% else %}
+	{{ user.first_name }} hasn't specified reason(s) for seeking help yet.
+	{% endif %}
+	{% endif %}
+    </div>
+    <div class="divider"></div>
+
+    <div class="section">
+    <h4 class="header grey-text text-lighten-1">Exercises</h4>
+        {% if not assigned_tasks %}
+		{% if request.user == user %}You have {% else %}{{ user }} has {% endif %}
+        no assigned exercises.
+        {% else %}
+        <table class="bordered highlight responsive-table">
+            <thead>
+                <tr class="grey lighten-2">
+                    <th data-field="name">Name</th>
+                    <th data-field="status">Status</th>
+                    <th data-field="deadline">Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for status, assigned_task_list in assigned_tasks.items %}
+                {% for assigned_task in assigned_task_list %}
+                <tr>
+                    <td>
+						{% if request.user == user %}
+                        {% if status == 'Completed' %}
+                        <a class="modal-trigger" href="#completedmodal">
+                        {% elif status == 'Missed' %}
+                        <a class="modal-trigger" href="#missedmodal">
+                        {% else %}
+                        <a href="{% url 'studentexercise' assigned_task.id %}">
+						{% endif %}
+                        {% endif %}
+                        <div class="table-link">{{ assigned_task.task.name }}</div>
+                        </a>
+                    </td>
+                    <td>
+						{% if request.user == user %}
+                        {% if status == 'Completed' %}
+                        <a class="modal-trigger" href="#completedmodal">
+                        {% elif status == 'Missed' %}
+                        <a class="modal-trigger" href="#missedmodal">
+                        {% else %}
+                        <a href="{% url 'studentexercise' assigned_task.id %}">
+						{% endif %}
+                        {% endif %}
+                        <div class="table-link">{{ status }}</div>
+                        </a>
+                    </td>
+                    <td>
+						{% if request.user == user %}
+                        {% if status == 'Completed' %}
+                        <a class="modal-trigger" href="#completedmodal">
+                        {% elif status == 'Missed' %}
+                        <a class="modal-trigger" href="#missedmodal">
+                        {% else %}
+                        <a href="{% url 'studentexercise' assigned_task.id %}">
+						{% endif %}
+                        {% endif %}
+                        <div class="table-link">{{ assigned_task.deadline_datetime|default:"None" }}</div>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        </div>
+</div>
+</div>
+
+{% endblock content %}

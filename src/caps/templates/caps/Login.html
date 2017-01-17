@@ -1,0 +1,59 @@
+{% extends "caps/Base.html" %}
+
+{% block title %} CaPS - Login {% endblock title %}
+
+{% block content %}
+    {% load static %}
+
+    <div class="row">
+        <div class="col s4 offset-s4">
+            <div class="card">
+                <div class="card-title grey lighten-2 center-align">Login</div>
+                <!-- Login form -->
+                <p style="color:red">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+                </p>
+                {% if user.is_authenticated %}
+                    You are already logged in!<br>
+                    Would you like to <a href="{% url 'logout' %}">logout</a>?
+                {% else %}
+                <div class="padded">
+                    <form action="{% url 'login' %}" method="post">
+                    {% for field in form.visible_fields %}
+                        <div class="input-field">
+                        {{ field.label_tag }} {{ field }}<br>
+                        </div>
+                        {% if field.errors %}
+                            <p style="color:red">
+                            {{field.errors}}
+                            </p>
+                        {% endif %}
+                        {% if field.non_field_errors %}
+                            <p style="color:red">
+                            {{field.non_field_errors}}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                    {% csrf_token %}
+                    <div class="center-align">
+                        <button class="waves-effect waves-light btn grey lighten-2" type="submit" value="Login">Login</button>
+                    </div>
+                    <input type="hidden" name="next" value="{{next}}">
+                    </form>
+                </div>
+                {% endif %}
+                <!-- For a future iteration
+                <br><a href="#">Reset Password</a>
+                -->
+            </div>
+                <div class="center-align">
+                Want to create an account to get help?<br>
+                Click <a href="{% url 'register' %}">here</a> to register.
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

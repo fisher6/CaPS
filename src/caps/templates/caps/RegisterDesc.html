@@ -1,0 +1,71 @@
+{% extends "caps/BaseHome.html" %}
+
+{% block title %} CaPS - Register Description {% endblock title %}
+
+{% block content %}
+    {% load static %}
+
+<div class="section">
+<div class="row">
+    <div class="col s6">
+    <div class="card white">
+    <div class="card-content">
+    <h4 class="grey-text text-lighten-1">We're here to help</h4>
+    <p>
+        CaPS supports students in a confidential and caring way. By registering here, you'll be able to set up a profile
+        to keep track of and change any mental health needs.  You'll also be able to schedule to see a therapist and
+        have access to personalized exercises to help you stay engaged in your treatment and improve your mental health.
+    </p>
+    <br>
+    <p>
+        For more than 70 years, CaPS has been addressing the mental health needs of the university community by
+        providing treatment to students and collaborating with staff, faculty and family members. CaPS helps students
+        improve their psychological health by facilitating insight and fostering deeper understanding of their personal
+        struggles needed to make better choices for themselves. Services at CaPS are developmental in nature, aimed at
+        supporting students in the moment and in their personal growth and maturation over time. CaPS is attentive to
+        issues of diversity and equality. We respect and value each person as a unique individual.
+    </p>
+    </div>
+    </div>
+    </div>
+    <div class="col s6">
+    <div class="card white">
+    <div class="card-content">
+    <h4 class="grey-text text-lighten-1">Our Staff</h4>
+    <p>
+        At CaPS, we are dedicated to the psychological growth and emotional well-being of all Carnegie Mellon students.
+        Confidential services for students include
+        consultation, short-term individual psychotherapy, crisis support and psychiatric referral when appropriate.
+        Our staff provides consultation and education for students, faculty, staff and family members to address
+        concerns regarding the well-being of a student, and questions about our services or psychological treatment.
+    </p>
+    <br>
+    <br>
+    <p>
+        Our team is made up of highly qualified:
+    </p>
+    <ul>
+    <li><i class="material-icons">done</i>mental health professionals</li>
+    <li><i class="material-icons">done</i>advanced-level doctoral trainees</li>
+    <li><i class="material-icons">done</i>support staff</li>
+    </ul>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<div class="section">
+
+    <div class="center-align">
+        {% if user.is_authenticated %}
+            You're already registered!<br>
+            Would you like to <a href="{% url 'logout' %}">logout</a>?
+        {% else %}
+        <a href="{% url 'register' %}"><button class="waves-effect waves-light btn grey lighten-2">Register</button></a>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock content %}

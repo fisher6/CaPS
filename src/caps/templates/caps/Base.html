@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <title>{% block title %}CAPS{% endblock title %}</title>
+      <!-- CSS links -->
+      {% load static %}
+      <link href="{% static 'caps/images/favicon.ico' %}" rel="icon">
+      {% block css %}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="{% static 'caps/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen, projection"/>
+      <link href="{% static 'caps/css/caps.css' %}" type="text/css" rel="stylesheet" media="screen, projection"/>
+      {% endblock css %}
+    </head>
+    <body>
+        <!-- Navigation Bar -->
+        {% block navigation %}
+            <ul id="dropdown1" class="dropdown-content grey-text text-lighten-1">
+                {% if request.user.student %}
+                    <li><a class="black-text text-dark-red" href="{% url 'studentprofile' %}">Profile</a></li>
+                    <li><a class="black-text text-dark-red" href="{% url 'updateprofile' %}">Edit</a></li>
+                {% elif request.user.counselor %}
+                    <li><a class="black-text text-dark-red" href="{% url 'counselorprofile' request.user.username %}">Profile</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li><a class="black-text text-dark-red" href="{% url 'counselor_list' %}">Counselors</a></li>
+                <li><a class="black-text text-dark-red" href="{% url 'logout' %}">Logout</a></li>
+                {% endif %}
+                <!-- For a future iteration
+                <li class="divider"></li>
+                {% if student %}
+                <li><a href="#!">Deactivate</a></li>
+                {% endif %}
+                -->
+            </ul>
+        <div id="mainNav" class="navbar-fixed z-pos-above-1">
+            <nav class="nav-extended grey lighten-2 black-text" role="navigation">
+                <div class="nav-wrapper">
+                    <a id="logo-container" href="{% url 'home' %}" class="brand-logo cmu-logo">
+                        <img src="{% static "caps/images/CMU_logo_horiz_red_caps.png" %}" height=80px>
+                        <!-- Carnegie Mellon University -->
+                    </a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down grey lighten-2">
+                        <li>{{request.user.username}} </li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Profile
+                            <i class="material-icons right">arrow_drop_down</i></a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        {% if request.user.student %}
+                            <li><a class="text-dark-red" href="{% url 'studentprofile' %}">Profile</a></li>
+                            <li><a class="text-dark-red" href="{% url 'updateprofile' %}">Edit</a></li>
+                        {% elif request.user.counselor %}
+                            <li><a class="text-dark-red" href="{% url 'counselorprofile' request.user.username %}">Profile</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li><a class="text-dark-red" href="{% url 'counselor_list' %}">Counselors</a></li>
+                        <li><a class="text-dark-red" href="{% url 'logout' %}">Logout</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                    {% block extendnav %}
+                    {% endblock extendnav %}
+
+                </div>
+            </nav>
+        </div>
+        {% block extendnavcontent %}
+        {% endblock extendnavcontent %}
+
+        {% endblock navigation %}
+
+        <!-- Main Page Content -->
+        <div class="padded">
+        {% block content %}{% endblock content %}
+        </div>
+
+        {% block footer %}
+        {% endblock footer %}
+
+        <!-- JavaScript links -->
+        {% block scripts %}
+        <script type="text/javascript" src="{% static 'caps/js/jquery-3.1.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'caps/js/script.js' %}"></script>
+        <script type="text/javascript" src="{% static 'caps/js/materialize.js' %}"></script>
+        {% endblock scripts %}
+
+    </body>
+</html>

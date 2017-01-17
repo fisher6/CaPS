@@ -1,0 +1,13 @@
+{% extends "caps/BaseHome.html" %}
+
+{% block title %} CaPS - Register Check Email {% endblock title %}
+
+{% block content %}
+    {% load static %}
+    <div class="center-align">
+        <br>
+        <h5>A confirmation email was sent to 
+		<a href="https://email.cmu.edu/">{{ username }}@andrew.cmu.edu</a>.</h5>
+    </div>
+
+{% endblock content %}
